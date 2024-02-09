@@ -1,3 +1,21 @@
+from PySide2 import QtWidgets, QtGui, QtCore
+
+class CustomTheme:
+    themes = {
+        "Dark Mode": """
+            background-color: #1F1F1F;
+            color: white;
+        """,
+        "Light Mode": """
+            background-color: white;
+            color: black;
+        """
+    }
+
+    @staticmethod
+    def apply_theme(widget, theme):
+        widget.setStyleSheet(theme)
+
 class StyledWidget(QtWidgets.QWidget):
     def __init__(self):
         super().__init__()
@@ -22,6 +40,10 @@ class StyledWidget(QtWidgets.QWidget):
         selected_theme = self.theme_combobox.currentText()
         theme = CustomTheme.themes.get(selected_theme)
         if theme:
-            # Apply theme to other widgets
-            self.label.setStyleSheet(theme)
-            self.button.setStyleSheet(theme)
+            CustomTheme.apply_theme(self, theme)
+
+if __name__ == "__main__":
+    app = QtWidgets.QApplication([])
+    widget = StyledWidget()
+    widget.show()
+    app.exec_()
